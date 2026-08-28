@@ -1,0 +1,312 @@
+<section id="filo" class="t-sheet" aria-labelledby="filo-heading">
+  <div class="t-gutter">
+    <div class="t-sheet__row">
+      <div class="reveal t-sheet__aside">
+        <div class="label-t t-numeral">{{ section.settings.numeral | escape }}</div>
+        <div class="label-t t-seclabel">{{ section.settings.label | escape }}</div>
+      </div>
+
+      <div class="t-sheet__body">
+        <div class="split">
+          <div class="reveal is-image split__media">
+            {% render 'taiyib-plate',
+              image: section.settings.image,
+              fallback: 'taiyib-contrast-stitch.png',
+              width: 1024,
+              height: 1024,
+              alt: section.settings.image_alt,
+              caption: section.settings.image_caption,
+              ratio_class: 'aspect-portrait',
+              show_caption: true,
+              sizes: '(max-width: 820px) 100vw, 32rem'
+            %}
+          </div>
+
+          <div class="split__body">
+            <div class="reveal" style="--reveal-delay: 80ms;">
+              <h2 id="filo-heading" class="t-headline wordmark filo-title">
+                {{- section.settings.heading | escape -}}
+              </h2>
+            </div>
+
+            <div class="t-stack t-mt-prose">
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'paragraph' -%}
+                  <div class="reveal" style="--reveal-delay: {{ forloop.index | times: 80 | plus: 80 }}ms;" {{ block.shopify_attributes }}>
+                    <p class="prose-t t-prose">{{ block.settings.text }}</p>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+
+            <div class="reveal" style="--reveal-delay: 320ms;">
+              <dl class="speclist">
+                {%- for block in section.blocks -%}
+                  {%- if block.type == 'spec' -%}
+                    <div class="speclist__row" {{ block.shopify_attributes }}>
+                      <dt class="label-t">{{ block.settings.term | escape }}</dt>
+                      <dd class="num">{{ block.settings.value | escape }}</dd>
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "TAIYIB filo",
+  "settings": [
+    {
+      "type": "text",
+      "id": "numeral",
+      "label": "Numeral",
+      "default": "III"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Section label",
+      "default": "Piece 02"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Filo"
+    },
+    {
+      "type": "header",
+      "content": "Plate"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "Macro detail of an ecru cotton saddle-stitch run by hand along the edge of a black wool-crepe placket."
+    },
+    {
+      "type": "text",
+      "id": "image_caption",
+      "label": "Image caption",
+      "default": "Image — contrast stitch, detail"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "paragraph",
+      "name": "Paragraph",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "spec",
+      "name": "Specification row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "term",
+          "label": "Term",
+          "default": "Cloth"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": ""
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TAIYIB filo",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Filo is thread. Ecru cotton, seven stitches to the inch, run by hand around the full perimeter of the garment — stand, placket, pocket, cuff, seam, hem.</p>"
+          }
+        },
+        {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>The stitch is not decoration. It is the construction, brought to the surface and left where it can be seen, in the way a weld is left exposed.</p>"
+          }
+        },
+        {
+          "type": "spec",
+          "settings": {
+            "term": "Cloth",
+            "value": "320 g/m wool-crepe, Biella"
+          }
+        },
+        {
+          "type": "spec",
+          "settings": {
+            "term": "Stitch",
+            "value": "Ecru cotton · 7 stitches per inch · hand-run"
+          }
+        },
+        {
+          "type": "spec",
+          "settings": {
+            "term": "Collar",
+            "value": "Stand, 4.2 cm, three-piece, hand-set"
+          }
+        },
+        {
+          "type": "spec",
+          "settings": {
+            "term": "Placket",
+            "value": "Concealed under-placket, four mother-of-pearl"
+          }
+        },
+        {
+          "type": "spec",
+          "settings": {
+            "term": "Pocket",
+            "value": "Patch, chest, hand-set"
+          }
+        },
+        {
+          "type": "spec",
+          "settings": {
+            "term": "Cut",
+            "value": "Brianza, Lombardia"
+          }
+        },
+        {
+          "type": "spec",
+          "settings": {
+            "term": "Hours",
+            "value": "41"
+          }
+        },
+        {
+          "type": "spec",
+          "settings": {
+            "term": "Tones",
+            "value": "Nero · Notte"
+          }
+        },
+        {
+          "type": "spec",
+          "settings": {
+            "term": "Sizes",
+            "value": "46 – 56 Italian, three lengths"
+          }
+        },
+        {
+          "type": "spec",
+          "settings": {
+            "term": "Price",
+            "value": "£4,200"
+          }
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "paragraph",
+        "settings": {
+          "text": "<p>Filo is thread. Ecru cotton, seven stitches to the inch, run by hand around the full perimeter of the garment — stand, placket, pocket, cuff, seam, hem.</p>"
+        }
+      },
+      {
+        "type": "paragraph",
+        "settings": {
+          "text": "<p>The stitch is not decoration. It is the construction, brought to the surface and left where it can be seen, in the way a weld is left exposed.</p>"
+        }
+      },
+      {
+        "type": "spec",
+        "settings": {
+          "term": "Cloth",
+          "value": "320 g/m wool-crepe, Biella"
+        }
+      },
+      {
+        "type": "spec",
+        "settings": {
+          "term": "Stitch",
+          "value": "Ecru cotton · 7 stitches per inch · hand-run"
+        }
+      },
+      {
+        "type": "spec",
+        "settings": {
+          "term": "Collar",
+          "value": "Stand, 4.2 cm, three-piece, hand-set"
+        }
+      },
+      {
+        "type": "spec",
+        "settings": {
+          "term": "Placket",
+          "value": "Concealed under-placket, four mother-of-pearl"
+        }
+      },
+      {
+        "type": "spec",
+        "settings": {
+          "term": "Pocket",
+          "value": "Patch, chest, hand-set"
+        }
+      },
+      {
+        "type": "spec",
+        "settings": {
+          "term": "Cut",
+          "value": "Brianza, Lombardia"
+        }
+      },
+      {
+        "type": "spec",
+        "settings": {
+          "term": "Hours",
+          "value": "41"
+        }
+      },
+      {
+        "type": "spec",
+        "settings": {
+          "term": "Tones",
+          "value": "Nero · Notte"
+        }
+      },
+      {
+        "type": "spec",
+        "settings": {
+          "term": "Sizes",
+          "value": "46 – 56 Italian, three lengths"
+        }
+      },
+      {
+        "type": "spec",
+        "settings": {
+          "term": "Price",
+          "value": "£4,200"
+        }
+      }
+    ]
+  }
+}
+{% endschema %}

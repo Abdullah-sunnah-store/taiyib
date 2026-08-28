@@ -1,0 +1,55 @@
+{% comment %}
+  Navigation does not exist for the first 5.2s. It fades in only after the
+  wordmark has fully resolved.
+{% endcomment %}
+<header class="masthead masthead-in">
+  <div class="masthead__row">
+    <a href="{{ section.settings.wordmark_link | default: '#overture' }}" class="wordmark masthead__mark">
+      {{- section.settings.wordmark | escape -}}
+    </a>
+
+    {%- if section.blocks.size > 0 -%}
+      <nav class="masthead__nav" aria-label="{{ section.settings.nav_label | escape }}">
+        <ul>
+          {%- for block in section.blocks -%}
+            <li {{ block.shopify_attributes }}>
+              <a href="{{ block.settings.link | default: '#' }}" class="nav-link label-t">
+                {{- block.settings.label | escape -}}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "TAIYIB masthead",
+  "settings": [
+    { "type": "text", "id": "wordmark", "label": "Wordmark", "default": "TAIYIB" },
+    { "type": "text", "id": "wordmark_link", "label": "Wordmark link", "default": "#overture" },
+    { "type": "text", "id": "nav_label", "label": "Nav aria-label", "default": "Sections" }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Section" },
+        { "type": "text", "id": "link", "label": "Link", "default": "#" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "link", "settings": { "label": "The Inversion", "link": "#inversion" } },
+      { "type": "link", "settings": { "label": "The Four", "link": "#the-four" } },
+      { "type": "link", "settings": { "label": "Filo", "link": "#filo" } },
+      { "type": "link", "settings": { "label": "Tīb", "link": "#tib" } },
+      { "type": "link", "settings": { "label": "Access", "link": "#access" } }
+    ]
+  }
+}
+{% endschema %}

@@ -1,0 +1,55 @@
+<!doctype html>
+{% comment %}
+  TAIYIB — a dedicated layout for the house page.
+
+  It deliberately does not use layout/theme.liquid: the design is dark-only,
+  edge to edge, and carries its own fixed masthead and colophon. Rendering
+  Horizon's header-group and footer-group inside it would put a second
+  navigation and a second footer on the page.
+{% endcomment %}
+<html
+  class="taiyib-html{% if request.design_mode %} shopify-design-mode{% endif %}"
+  lang="{{ request.locale.iso_code }}"
+>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#08090A">
+
+    <link rel="icon" type="image/svg+xml" href="{{ 'taiyib-icon.svg' | asset_url }}">
+
+    {%- comment -%}
+      Fonts are self-hosted from assets/ and served by the Shopify CDN, the
+      same way next/font self-hosted them in the v0 source. The display face
+      is preloaded because the hero wordmark animates on it immediately.
+    {%- endcomment -%}
+    {{
+      'taiyib-font-bodoni-moda-latin.woff2'
+      | asset_url
+      | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous'
+    }}
+    {% render 'taiyib-fonts' %}
+
+    <link rel="stylesheet" href="{{ 'taiyib.css' | asset_url }}">
+    <script src="{{ 'taiyib.js' | asset_url }}" defer></script>
+
+    {{ content_for_header }}
+  </head>
+
+  <body class="taiyib">
+    {% render 'taiyib-atmosphere' %}
+
+    <div class="scroll-rail" aria-hidden="true">
+      <div class="scroll-rail__fill"></div>
+    </div>
+
+    {% section 'taiyib-masthead' %}
+
+    <main id="MainContent" role="main" style="position: relative; z-index: 10;">
+      {{ content_for_layout }}
+    </main>
+
+    {% section 'taiyib-colophon' %}
+  </body>
+</html>

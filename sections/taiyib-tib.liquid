@@ -1,0 +1,292 @@
+<section id="tib" class="t-sheet" aria-labelledby="tib-heading">
+  <div class="t-gutter">
+    <div class="t-sheet__row">
+      <div class="reveal t-sheet__aside">
+        <div class="label-t t-numeral">{{ section.settings.numeral | escape }}</div>
+        <div class="label-t t-seclabel">{{ section.settings.label | escape }}</div>
+      </div>
+
+      <div class="t-sheet__body">
+        <div class="reveal">
+          <h2 id="tib-heading" class="t-headline">{{ section.settings.heading | escape }}</h2>
+        </div>
+
+        {% comment %}
+          rtl is scoped to an inline-block so the word sits at the start of the
+          measure rather than being flung to the right edge of the column.
+        {% endcomment %}
+        <div class="reveal t-mt-arabic" style="--reveal-delay: 100ms;">
+          <p>
+            <span dir="rtl" lang="ar" class="tib-word">{{ section.settings.arabic }}</span>
+          </p>
+        </div>
+
+        <div class="t-stack t-mt-tib-prose">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'paragraph' -%}
+              <div class="reveal" style="--reveal-delay: {{ forloop.index | times: 80 | plus: 80 }}ms;" {{ block.shopify_attributes }}>
+                <p class="prose-t t-prose">{{ block.settings.text }}</p>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        <div class="flacon">
+          {% comment %} One tall column, not a grid of three {% endcomment %}
+          <div class="reveal flacon__panel" style="--reveal-delay: 80ms;">
+            <div class="sweep flacon__card">
+              <div class="flacon__head">
+                <h3 class="wordmark">{{ section.settings.flacon_name | escape }}</h3>
+                <p dir="rtl" lang="ar">{{ section.settings.flacon_arabic }}</p>
+              </div>
+
+              <dl>
+                {%- for block in section.blocks -%}
+                  {%- if block.type == 'row' -%}
+                    <div class="flacon__row" {{ block.shopify_attributes }}>
+                      <dt class="label-t">{{ block.settings.term | escape }}</dt>
+                      <dd class="num">{{ block.settings.value | escape }}</dd>
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </dl>
+            </div>
+          </div>
+
+          <div class="reveal is-image flacon__media" style="--reveal-delay: 200ms;">
+            {% render 'taiyib-plate',
+              image: section.settings.image,
+              fallback: 'taiyib-tib-flacon.png',
+              width: 1024,
+              height: 1024,
+              alt: section.settings.image_alt,
+              caption: section.settings.image_caption,
+              ratio_class: 'aspect-portrait',
+              sizes: '(max-width: 820px) 100vw, 28rem'
+            %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "TAIYIB tib",
+  "settings": [
+    {
+      "type": "text",
+      "id": "numeral",
+      "label": "Numeral",
+      "default": "IV"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Section label",
+      "default": "The Perfume"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "One perfume. Ever."
+    },
+    {
+      "type": "text",
+      "id": "arabic",
+      "label": "Arabic word",
+      "default": "طَيِّب"
+    },
+    {
+      "type": "header",
+      "content": "Flacon panel"
+    },
+    {
+      "type": "text",
+      "id": "flacon_name",
+      "label": "Name",
+      "default": "TĪB"
+    },
+    {
+      "type": "text",
+      "id": "flacon_arabic",
+      "label": "Arabic",
+      "default": "طِيب"
+    },
+    {
+      "type": "header",
+      "content": "Plate"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "A tall 50 ml smoked glass flacon with a machined graphite cap, lit by a single hard source in a black void."
+    },
+    {
+      "type": "text",
+      "id": "image_caption",
+      "label": "Image caption",
+      "default": "Image — flacon in void, single source"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "paragraph",
+      "name": "Paragraph",
+      "settings": [
+        {
+          "type": "html",
+          "id": "text",
+          "label": "Text",
+          "info": "HTML is allowed so Arabic can be marked up inline with dir=rtl lang=ar class=ar."
+        }
+      ]
+    },
+    {
+      "type": "row",
+      "name": "Flacon row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "term",
+          "label": "Term",
+          "default": "Structure"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": ""
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TAIYIB tib",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "settings": {
+            "text": "The root <span dir=\"rtl\" lang=\"ar\" class=\"ar\">ط‑ي‑ب</span> gives two words. <span dir=\"rtl\" lang=\"ar\" class=\"ar\">طَيِّب</span> — ṭayyib — pure, sound, wholesome. <span dir=\"rtl\" lang=\"ar\" class=\"ar\">طِيب</span> — ṭīb — perfume. A thing is scented because it is clean."
+          }
+        },
+        {
+          "type": "paragraph",
+          "settings": {
+            "text": "TĪB is the second half of the root. It is not made to sit beside the others on the dresser. It is made to replace one of them."
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "term": "Structure",
+            "value": "Frankincense over iris, on dry cedar and ambrette"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "term": "Notes",
+            "value": "Omani frankincense · Iris pallida root · Cypress · Cedar · Ambrette seed · Benzoin · Grey ambergris"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "term": "Concentration",
+            "value": "Extrait, 22%"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "term": "Maturation",
+            "value": "Six months in glass before filling"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "term": "Format",
+            "value": "50 ml · smoked glass · machined graphite cap. Name engraved in the base"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "term": "Price",
+            "value": "£340"
+          }
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "paragraph",
+        "settings": {
+          "text": "The root <span dir=\"rtl\" lang=\"ar\" class=\"ar\">ط‑ي‑ب</span> gives two words. <span dir=\"rtl\" lang=\"ar\" class=\"ar\">طَيِّب</span> — ṭayyib — pure, sound, wholesome. <span dir=\"rtl\" lang=\"ar\" class=\"ar\">طِيب</span> — ṭīb — perfume. A thing is scented because it is clean."
+        }
+      },
+      {
+        "type": "paragraph",
+        "settings": {
+          "text": "TĪB is the second half of the root. It is not made to sit beside the others on the dresser. It is made to replace one of them."
+        }
+      },
+      {
+        "type": "row",
+        "settings": {
+          "term": "Structure",
+          "value": "Frankincense over iris, on dry cedar and ambrette"
+        }
+      },
+      {
+        "type": "row",
+        "settings": {
+          "term": "Notes",
+          "value": "Omani frankincense · Iris pallida root · Cypress · Cedar · Ambrette seed · Benzoin · Grey ambergris"
+        }
+      },
+      {
+        "type": "row",
+        "settings": {
+          "term": "Concentration",
+          "value": "Extrait, 22%"
+        }
+      },
+      {
+        "type": "row",
+        "settings": {
+          "term": "Maturation",
+          "value": "Six months in glass before filling"
+        }
+      },
+      {
+        "type": "row",
+        "settings": {
+          "term": "Format",
+          "value": "50 ml · smoked glass · machined graphite cap. Name engraved in the base"
+        }
+      },
+      {
+        "type": "row",
+        "settings": {
+          "term": "Price",
+          "value": "£340"
+        }
+      }
+    ]
+  }
+}
+{% endschema %}

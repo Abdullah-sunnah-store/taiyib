@@ -1,0 +1,70 @@
+{% comment %}
+  An image slot. Falls back to the image shipped with the design, and then to
+  a --pece panel with a hairline border and the caption placeholder when
+  neither exists.
+
+  The whole treatment — overflow, --pece ground, grade, dissolving bottom edge,
+  and the 1.4s hover scale — lives on the .plate class in taiyib.css, so every
+  photograph on the page is graded identically.
+
+  Accepts:
+    image          - {Object}  image_picker setting, may be blank
+    fallback       - {String}  asset filename used when image is blank
+    width          - {Number}  intrinsic width of the fallback asset
+    height         - {Number}  intrinsic height of the fallback asset
+    alt            - {String}  alt text
+    caption        - {String}  shown beneath the plate, and inside the empty state
+    ratio_class    - {String}  aspect-bleed | aspect-portrait
+    show_caption   - {Boolean} render a visible hairline caption
+    caption_class  - {String}  lets a full-bleed plate pull its caption back
+                               inside the page gutter
+    sizes          - {String}  sizes attribute
+    loading        - {String}  lazy (default) | eager
+{% endcomment %}
+
+{%- liquid
+  assign plate_sizes = sizes | default: '100vw'
+  assign plate_loading = loading | default: 'lazy'
+  assign plate_alt = alt | default: caption
+-%}
+
+{%- if image != blank -%}
+  <figure>
+    <div class="plate {{ ratio_class }}">
+      {{
+        image
+        | image_url: width: 1600
+        | image_tag:
+          loading: plate_loading,
+          sizes: plate_sizes,
+          widths: '400, 600, 800, 1000, 1200, 1600',
+          alt: plate_alt
+      }}
+    </div>
+    {%- if show_caption -%}
+      <figcaption class="label-t plate-caption {{ caption_class }}">{{ caption }}</figcaption>
+    {%- endif -%}
+  </figure>
+
+{%- elsif fallback != blank -%}
+  <figure>
+    <div class="plate {{ ratio_class }}">
+      <img
+        src="{{ fallback | asset_url }}"
+        alt="{{ plate_alt | escape }}"
+        width="{{ width }}"
+        height="{{ height }}"
+        loading="{{ plate_loading }}"
+        sizes="{{ plate_sizes }}"
+      >
+    </div>
+    {%- if show_caption -%}
+      <figcaption class="label-t plate-caption {{ caption_class }}">{{ caption }}</figcaption>
+    {%- endif -%}
+  </figure>
+
+{%- else -%}
+  <div class="plate-empty {{ ratio_class }}" role="img" aria-label="{{ plate_alt | escape }}">
+    <span class="label-t">{{ caption }}</span>
+  </div>
+{%- endif -%}

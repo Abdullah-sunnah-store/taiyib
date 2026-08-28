@@ -1,0 +1,30 @@
+<footer class="colophon">
+  <div class="reveal">
+    <div class="colophon__row">
+      <div>
+        <p class="wordmark colophon__mark">{{ section.settings.wordmark | escape }}</p>
+        <p dir="rtl" lang="ar" class="colophon__ar">{{ section.settings.arabic }}</p>
+      </div>
+
+      <address class="label-t colophon__address">
+        {{ section.settings.address }}
+      </address>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "TAIYIB colophon",
+  "settings": [
+    { "type": "text", "id": "wordmark", "label": "Wordmark", "default": "TAIYIB" },
+    { "type": "text", "id": "arabic", "label": "Arabic", "default": "طَيِّب" },
+    {
+      "type": "html",
+      "id": "address",
+      "label": "Address",
+      "default": "Via della Spiga, Milano<br>Mount Street, London<br><span class=\"num\">MMXXVI</span>"
+    }
+  ]
+}
+{% endschema %}

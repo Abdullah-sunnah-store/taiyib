@@ -1,0 +1,12 @@
+{% comment %}
+  The room: one drifting radial light and a fixed grain plate.
+  Both are inert to the pointer and sit behind / above all content.
+{% endcomment %}
+<div class="ambient" aria-hidden="true"></div>
+<svg class="grain" aria-hidden="true" focusable="false">
+  <filter id="taiyib-grain">
+    <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="4" stitchTiles="stitch" />
+    <feColorMatrix type="saturate" values="0" />
+  </filter>
+  <rect width="100%" height="100%" filter="url(#taiyib-grain)" />
+</svg>

@@ -1,0 +1,42 @@
+{% comment %}
+  0 — Overture. The first screen is void. No background image.
+  The wordmark resolves out of the dark over 3.4s.
+{% endcomment %}
+<section id="overture" class="overture" aria-label="{{ section.settings.wordmark | escape }}">
+  <h1 class="wordmark overture-mark">{{ section.settings.wordmark | escape }}</h1>
+
+  <div class="draw-rule overture__rule" aria-hidden="true"></div>
+
+  <div class="fade-late overture__sub">
+    <p class="overture__line">{{ section.settings.line }}</p>
+
+    {%- if section.settings.cities != blank -%}
+      <p class="label-t overture__cities">{{ section.settings.cities }}</p>
+    {%- endif -%}
+  </div>
+
+  {% comment %} Descender with a slow travelling light, as a scroll cue {% endcomment %}
+  <div class="descender fade-late overture__descender" aria-hidden="true"></div>
+</section>
+
+{% schema %}
+{
+  "name": "TAIYIB overture",
+  "settings": [
+    { "type": "text", "id": "wordmark", "label": "Wordmark", "default": "TAIYIB" },
+    {
+      "type": "text",
+      "id": "line",
+      "label": "Line",
+      "default": "Four thobes. One perfume. Nothing else."
+    },
+    {
+      "type": "text",
+      "id": "cities",
+      "label": "Cities",
+      "default": "Milano · London"
+    }
+  ],
+  "presets": [{ "name": "TAIYIB overture" }]
+}
+{% endschema %}
