@@ -1,0 +1,24 @@
+{% comment %}
+  The TAIYIB house page, served as the storefront home page.
+
+  A Liquid template rather than JSON, because only a Liquid template can select
+  a layout — and this page needs layout/taiyib.liquid rather than
+  layout/theme.liquid, which would add Horizon's header-group and footer-group
+  on top of the masthead and colophon the design already carries.
+
+  Every section below is a real section, so all copy, prices, specs and images
+  stay editable in the theme editor.
+
+  The previous home page was the stock Horizon hero and product list; it is in
+  git history at templates/index.json if it is ever wanted back.
+{% endcomment %}
+{% layout 'taiyib' %}
+
+{% section 'taiyib-overture' %}
+{% section 'taiyib-inversion' %}
+{% section 'taiyib-the-four' %}
+{% section 'taiyib-filo' %}
+{% section 'taiyib-tib' %}
+{% section 'taiyib-origin' %}
+{% section 'taiyib-laws' %}
+{% section 'taiyib-access' %}
